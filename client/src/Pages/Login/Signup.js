@@ -1,12 +1,22 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Signup = () => {
-  const { register, userProfileUpdate, emailVerify } = useContext(AuthContext);
+  const googleProvider = new GoogleAuthProvider();
+  const {
+    register,
+    userProfileUpdate,
+    emailVerify,
+    providerLogin,
+    setLoading,
+    loading,
+  } = useContext(AuthContext);
   const [imageUrl, setImageUrl] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,12 +70,29 @@ const Signup = () => {
           photoURL: imageUrl,
         });
         await emailVerify();
+        navigate("/");
         toast.success(`User has created`);
       } catch (error) {
         toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     createUser();
+  };
+
+  // ** google login
+
+  const googleLoginHandler = async () => {
+    try {
+      const result = await providerLogin(googleProvider);
+      navigate("/");
+      toast.success("Login with google successful...");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -157,7 +184,11 @@ const Signup = () => {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            onClick={googleLoginHandler}
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
