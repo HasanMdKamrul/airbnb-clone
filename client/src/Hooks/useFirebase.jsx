@@ -3,6 +3,7 @@ import {
   getAuth,
   onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -66,6 +67,12 @@ const useFirebase = () => {
 
   const emailVerify = () => sendEmailVerification(auth.currentUser);
 
+  // ** forgot passsword
+
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   const authInfo = {
     setLoading,
     emailVerify,
@@ -76,6 +83,7 @@ const useFirebase = () => {
     register,
     logIn,
     userProfileUpdate,
+    resetPassword,
   };
 
   return authInfo;

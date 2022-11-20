@@ -1,12 +1,15 @@
 import { GoogleAuthProvider } from "firebase/auth";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
+import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
-  const { providerLogin, setLoading, loading, logIn } = useContext(AuthContext);
+  const [resetEmail, setResetEmail] = useState("");
+  const { providerLogin, setLoading, loading, logIn, resetPassword } =
+    useContext(AuthContext);
   const googleProvider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,6 +40,19 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const passwordResetHandle = async () => {
+    try {
+      await resetPassword(resetEmail);
+      toast.success(
+        "Password reset email has been sent, please check your email"
+      );
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -61,6 +77,7 @@ const Login = () => {
                 Email address
               </label>
               <input
+                onBlur={(e) => setResetEmail(e.target.value)}
                 type="email"
                 name="email"
                 id="email"
@@ -92,12 +109,15 @@ const Login = () => {
               type="submit"
               classes="w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100"
             >
-              Sign in
+              {loading ? <SmallSpinner /> : "Sign in"}
             </PrimaryButton>
           </div>
         </form>
         <div className="space-y-1">
-          <button className="text-xs hover:underline text-gray-400">
+          <button
+            onClick={passwordResetHandle}
+            className="text-xs hover:underline text-gray-400"
+          >
             Forgot password?
           </button>
         </div>

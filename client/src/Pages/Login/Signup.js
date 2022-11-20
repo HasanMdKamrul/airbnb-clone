@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
+import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Signup = () => {
@@ -171,7 +172,7 @@ const Signup = () => {
                 type="submit"
                 classes="w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100"
               >
-                Sign up
+                {loading ? <SmallSpinner /> : "Sign Up"}
               </PrimaryButton>
             </div>
           </div>
