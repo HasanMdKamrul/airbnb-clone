@@ -18,8 +18,8 @@ const Home = () => {
   });
 
   return (
-    <div className="flex">
-      <div>
+    <div className="flex md:px-24 px-12">
+      <div className="mt-8">
         <SearchForm />
       </div>
       <div className="flex-1">
