@@ -2,6 +2,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { saveUserAndTokenGenerate } from "../../Apis/userCreationAndToken";
 import PrimaryButton from "../../Components/Button/PrimaryButton";
 import SmallSpinner from "../../Components/Spinner/SmallSpinner";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -19,6 +20,7 @@ const Login = () => {
   const googleLoginHandler = async () => {
     try {
       const result = await providerLogin(googleProvider);
+      saveUserAndTokenGenerate(result.user);
       navigate(from, { replace: true });
       toast.success("Login with google successful...");
     } catch (error) {
@@ -35,6 +37,7 @@ const Login = () => {
       const email = form.email.value;
       const password = form.password.value;
       const result = await logIn(email, password);
+      saveUserAndTokenGenerate(result.user);
       toast.success("User Login Successful...");
       console.log(result.user);
       navigate(from, { replace: true });
