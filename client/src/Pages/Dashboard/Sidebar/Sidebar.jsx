@@ -6,7 +6,10 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../../Components/Button/PrimaryButton";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import { UserRoleContext } from "../../../contexts/UserRoleProvider";
 import UserMenu from "../UserMenu";
+import AdminMenu from "./AdminMenu";
+import HostMenu from "./HostMenu";
 // import UserMenu from './UserMenu'
 // import AdminMenu from './AdminMenu'
 // import HostMenu from './HostMenu'
@@ -14,10 +17,14 @@ import UserMenu from "../UserMenu";
 // import AdminMenu from './AdminMenu'
 // import HostMenu from './HostMenu'
 
-const Sidebar = ({ role, loading }) => {
+const Sidebar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isActive, setActive] = useState("false");
+
+  const { role, loadingRole } = useContext(UserRoleContext);
+
   console.log(role);
+
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive);
@@ -76,12 +83,10 @@ const Sidebar = ({ role, loading }) => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
-              {/* {role && role !== 'requested' ? (
-                <>{role === 'admin' ? <AdminMenu /> : <HostMenu />} </>
-              ) : (
-                <UserMenu />
-              )} */}
-              <UserMenu />
+              {role && role === "admin" && <AdminMenu />}
+              {role && role === "host" && <HostMenu />}
+              {role && role === "requested" && <UserMenu />}
+              {!role && <UserMenu />}
             </nav>
           </div>
         </div>

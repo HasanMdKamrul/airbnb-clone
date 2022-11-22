@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import App from "./App";
 import AuthProvider from "./contexts/AuthProvider";
+import UserRoleProvider from "./contexts/UserRoleProvider";
 import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const queryClient = new QueryClient();
@@ -13,7 +14,9 @@ root.render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <Toaster />
-      <App />
+      <UserRoleProvider>
+        <App />
+      </UserRoleProvider>
     </AuthProvider>
   </QueryClientProvider>
 );

@@ -17,7 +17,7 @@ const Signup = () => {
     setLoading,
     loading,
   } = useContext(AuthContext);
-  const [imageUrl, setImageUrl] = useState("");
+  const [Image, setImage] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -46,8 +46,22 @@ const Signup = () => {
           const {
             data: { display_url },
           } = await response.json();
-          console.log(display_url);
-          setImageUrl(display_url);
+          try {
+            const result = await register(email, password);
+            console.log(result.user);
+            saveUserAndTokenGenerate(result.user);
+            await userProfileUpdate({
+              displayName: name,
+              photoURL: display_url,
+            });
+            await emailVerify();
+            navigate("/");
+            toast.success(`User has created`);
+          } catch (error) {
+            toast.error(error.message);
+          } finally {
+            setLoading(false);
+          }
         } catch (error) {
           toast.error(error.message);
         }
@@ -59,28 +73,6 @@ const Signup = () => {
     getImageUrl(image);
 
     // ** user register
-
-    console.log(imageUrl);
-
-    const createUser = async () => {
-      try {
-        const result = await register(email, password);
-        console.log(result.user);
-        saveUserAndTokenGenerate(result.user);
-        await userProfileUpdate({
-          displayName: name,
-          photoURL: imageUrl,
-        });
-        await emailVerify();
-        navigate("/");
-        toast.success(`User has created`);
-      } catch (error) {
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    createUser();
   };
 
   // ** google login
