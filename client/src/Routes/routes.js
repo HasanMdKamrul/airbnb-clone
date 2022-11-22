@@ -4,6 +4,7 @@ import MyBookings from "../Components/Dashboard/MyBookings";
 import Welcome from "../Components/Dashboard/Welcome";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
+import AddHomes from "../Pages/AddHomes/AddHomes";
 import AllBookings from "../Pages/AllBookings/AllBookings";
 import AllUsers from "../Pages/AllUsers/AllUsers";
 import Checkout from "../Pages/Checkout";
@@ -12,6 +13,7 @@ import Details from "../Pages/Details";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Login/Signup";
+import ManageHomes from "../Pages/ManageHomes/ManageHomes";
 import SearchResult from "../Pages/SearchResult";
 import ComingSoon from "../Pages/Shared/ComingSoon";
 import ErrorPage from "../Pages/Shared/ErrorPage";
@@ -105,6 +107,24 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <AllBookings />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-home",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AddHomes />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manage-homes",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ManageHomes />
           </PrivateRoute>
         ),
       },

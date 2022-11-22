@@ -55,12 +55,26 @@ export const updateRoleData = async (hostData) => {
   }
 };
 
+// ** Get a specific user role
 export const getUserRole = async (email) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_url}/users?email=${email}`
     );
     const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+// ** Get All User for Admin
+
+export const getAllUsers = async () => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_url}/users`);
+    const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error.message);
