@@ -4,6 +4,8 @@ import MyBookings from "../Components/Dashboard/MyBookings";
 import Welcome from "../Components/Dashboard/Welcome";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
+import AllBookings from "../Pages/AllBookings/AllBookings";
+import AllUsers from "../Pages/AllUsers/AllUsers";
 import Checkout from "../Pages/Checkout";
 import BecomeAHost from "../Pages/Dashboard/Sidebar/BecomeAHost";
 import Details from "../Pages/Details";
@@ -85,6 +87,24 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <BecomeAHost />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-users",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AllUsers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-bookings",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AllBookings />
           </PrivateRoute>
         ),
       },
