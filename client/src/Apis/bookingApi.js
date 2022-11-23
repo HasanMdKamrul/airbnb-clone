@@ -42,3 +42,26 @@ export const getBooking = async (email) => {
     console.log(error.message);
   }
 };
+
+// ** get all bookings as admin
+
+export const getAllBookings = async (email) => {
+  console.log(email);
+  const url = `${process.env.REACT_APP_url}/allbookings?email=${email}`;
+  console.log(url);
+  try {
+    const response = await fetch(`${process.env.REACT_APP_url}/bookings`, {
+      headers: {
+        authorization: `bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await response.json();
+    if (data?.success) {
+      console.log(data.data);
+      return data?.data;
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};

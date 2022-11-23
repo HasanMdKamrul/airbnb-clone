@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { getBooking } from "../../Apis/bookingApi";
+import React, { useContext } from "react";
+import { getAllBookings } from "../../Apis/bookingApi";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const AllBookings = () => {
+  const { user } = useContext(AuthContext);
+
   const { data: bookings = [] } = useQuery({
     queryKey: ["bookings"],
     queryFn: async () => {
       try {
-        const data = await getBooking();
+        const data = await getAllBookings(user?.email);
         return data;
       } catch (error) {
         console.log(error.message);

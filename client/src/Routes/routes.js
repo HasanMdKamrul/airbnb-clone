@@ -17,6 +17,8 @@ import ManageHomes from "../Pages/ManageHomes/ManageHomes";
 import SearchResult from "../Pages/SearchResult";
 import ComingSoon from "../Pages/Shared/ComingSoon";
 import ErrorPage from "../Pages/Shared/ErrorPage";
+import AdminRoute from "./AdminRoute";
+import HostRoute from "./HostRoute";
 import PrivateRoute from "./PrivateRoute";
 
 // ** private route sppiner loading
@@ -95,37 +97,37 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/all-users",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             {" "}
             <AllUsers />
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/all-bookings",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             {" "}
             <AllBookings />
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/add-home",
         element: (
-          <PrivateRoute>
+          <HostRoute>
             {" "}
             <AddHomes />
-          </PrivateRoute>
+          </HostRoute>
         ),
       },
       {
         path: "/dashboard/manage-homes",
         element: (
-          <PrivateRoute>
+          <HostRoute>
             {" "}
             <ManageHomes />
-          </PrivateRoute>
+          </HostRoute>
         ),
       },
     ],
